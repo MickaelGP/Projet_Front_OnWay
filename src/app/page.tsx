@@ -1,95 +1,61 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
+import NavHome from '@/ui/navHome/NavHome';
+import FooterHome from '@/ui/footerHome/FooterHome';
+import styles from '@/app/page.module.css'
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+  return (<>
+  <NavHome/>
+    <main>
+      <section className={styles.heroSection}>
+        <h1>OnWay</h1>
+      </section>
+      <div className={styles.sectionSearchBar}>
+        <div className={styles.searchBar}>
+          <input type="text" name="" id="" placeholder="Départ" />
+          <input type="text" name="" id="" placeholder="Destination" />
+          <input type="date" name="" id="" />
+          <input type="button" value="Rechercher" />
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </div>
+      <section className={styles.sectionTrajet}>
+        <div>
+          <h2>Vos trajets à petits prix</h2>
+          <p>
+            Où que vous alliez, vous trouvez le trajet idéal
+            parmi notre large choix de destinations à petits prix.
+          </p>
+        </div>
+        <div className={styles.imageTrajet}>
+          <img src="/img/imageTrajet.JPG" alt="" />
+        </div>
+      </section>
+      <section className={styles.sectionSecurite}>
+        <div>
+          <h2>Votre sécurité est notre priorité</h2>
+          <p>
+            Chez OnWay, nous nous sommes fixé comme objectif
+            de construire une communauté de covoiturage fiable et digne
+            de confiance.
+          </p>
+        </div>
+        <div className={styles.imageCouple}>
+          <img src="/img/imageCouple.png" alt="" />
+        </div>
+      </section>
+      <section className={styles.sectionTrajetDirect}>
+        <h2>Ou allez-vous ?</h2>
+        <div className={styles.choix}>
+          <div className={styles.choixTrajet}>
+            <p>Nice <span><span><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m9 18l6-6l-6-6"/></svg></span></span> Paris</p>
+          </div>
+          <div className={styles.choixTrajet}>
+            <p>Paris <span><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m9 18l6-6l-6-6"/></svg></span> Annecy</p>
+          </div>
+          <div className={styles.choixTrajet}>
+            <p>Lyon <span><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m9 18l6-6l-6-6"/></svg></span> Bordeaux</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <FooterHome/>
+  </>);
 }
