@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import type { Metadata } from "next";
 import BootstrapClient from '@/components/BootstrapClient';
 
-//import "./globals.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Onway",
