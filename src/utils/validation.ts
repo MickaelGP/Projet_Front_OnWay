@@ -27,3 +27,16 @@ export const mdpIdentique = (mdp: string, confirmMdp: string) => {
   }
   return resultat;
 };
+export const verifAge = (date: string) =>{
+  let resultat;
+  const unDate = new Date();
+  const unAnnee = unDate.getFullYear();
+  const naissance = date.split("-");
+  const utilAnneeNaissance = naissance[0];
+  if((unAnnee - parseInt(utilAnneeNaissance)) >= 18){
+    resultat = true;
+  }else{
+    resultat = false;
+  }
+  return resultat
+}
