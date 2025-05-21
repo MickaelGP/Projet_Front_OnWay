@@ -18,6 +18,16 @@ export const validationMdp = (mdp: string) => {
   }
   return resultat;
 };
+export const valideTelephone = (telephone: string) => {
+  const regex = /^((\+|00)33\s?|0)[67](\s?\d{2}){4}$/;
+  let resultat;
+  if (regex.test(telephone)) {
+    resultat = true;
+  } else {
+    resultat = false;
+  }
+  return resultat;
+};
 export const mdpIdentique = (mdp: string, confirmMdp: string) => {
   let resultat;
   if (mdp == confirmMdp) {
