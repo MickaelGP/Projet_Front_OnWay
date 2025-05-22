@@ -4,4 +4,5 @@ export const API_ROUTES = {
     deconnexion: '/deconnexion',
     inscription: '/inscription',
     contact: '/contact',
+    rechercheCovoit: '/recherche-covoiturage',
 }

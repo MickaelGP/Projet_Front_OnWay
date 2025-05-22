@@ -1,8 +1,8 @@
 export default function FormConnexion() {
     return (
-        <section className="sectionConexion container my-5">
+        <section className="sectionConexion container py-5">
             <h1 className="text-center">Connexion</h1>
-            <div className="container w-75 my-5">
+            <div className="container w-75 py-5">
                 <form className="my-5">
                     <div className="mb-3">
                         <input type="email" className="form-control" name="UtilEmail" id="connexionEmail" placeholder="Email :" required />

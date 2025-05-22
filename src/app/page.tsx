@@ -10,9 +10,9 @@ export default function Home() {
       </section>
       <div className={styles.sectionSearchBar}>
         <div className={styles.searchBar}>
-          <input type="text" name="" id="" placeholder="Départ" />
-          <input type="text" name="" id="" placeholder="Destination" />
-          <input type="date" name="" id="" />
+          <input type="text" name="villeDepart" id="villeDepart" placeholder="Départ" />
+          <input type="text" name="villeArriver" id="villeArriver" placeholder="Destination" />
+          <input type="date" name="covoitDate" id="covoitDate" />
           <input type="button" value="Rechercher" />
         </div>
       </div>
