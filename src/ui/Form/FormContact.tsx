@@ -1,7 +1,7 @@
 "use client"
 // Import des hooks React nécessaires et des fonctions de validation personnalisées
 import { useState, useEffect } from "react";
-import { validationEmail, valideTelephone } from '@/utils/validation';
+import { validationEmail, valideTelephone, valideMessageContact, valideTitreContact, valideNom } from '@/utils/validation';
 export default function FormContact() {
     // Déclaration des états (state) pour chaque champ du formulaire
     const [nom, setNom] = useState('');
@@ -17,8 +17,8 @@ export default function FormContact() {
 
     // useEffect permet de vérifier la validité globale du formulaire à chaque changement des champs concernés
     useEffect(() => {
-        setValide(validationEmail(adresseEmail) && valideTelephone(telephone));
-    }, [adresseEmail, telephone]); // Le hook est déclenché à chaque changement de ces champ
+        setValide(validationEmail(adresseEmail) && valideTelephone(telephone) && valideTitreContact(titre) && valideMessageContact(message) && valideNom(nom));
+    }, [adresseEmail, telephone, titre, message, nom]); // Le hook est déclenché à chaque changement de ces champ
 
     // Fonction déclenchée à la soumission du formulaire
     const handleSubmit = async (event: React.FormEvent) => {
@@ -57,7 +57,8 @@ export default function FormContact() {
 
         } catch (err) {
             // Si une erreur réseau ou serveur survient, on l'affiche dans la console
-            console.log(err);
+            console.error(err)
+            setErreur("Service momentanément inutilisable merci de ressayer plus tard")
         }
     }
     return (
@@ -78,6 +79,9 @@ export default function FormContact() {
                     <div className="mb-3">
                         <label htmlFor="contactNom" className="form-label">Votre nom :</label>
                         <input type="text" className="form-control" name="nom" id="contactNom" placeholder="Nom :" required value={nom} onChange={(e) => setNom(e.target.value)} />
+                        {nom && !valideNom(nom) && (
+                            <p className="text-danger">Le nom doit faire au minimum 5 caractères.</p>
+                        )}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="contactEmail" className="form-label">Votre email :</label>
@@ -96,10 +100,16 @@ export default function FormContact() {
                     <div className="mb-3">
                         <label htmlFor="contactTitre" className="form-label">L'objet de votre demande :</label>
                         <input type="text" className="form-control" name="titre" id="contactTitre" placeholder="Titre :" required value={titre} onChange={(e) => setTitre(e.target.value)} />
+                        {titre && !valideTitreContact(titre) && (
+                            <p className="text-danger">Votre titre doit faire au minimum 5 caractères.</p>
+                        )}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="contactDescription" className="form-label">Votre message :</label>
                         <textarea className="form-control" name="message" id="contactDescription" placeholder="Votre message :" required value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+                        {message && !valideMessageContact(message) && (
+                            <p className="text-danger">Votre message doit faire au minimum 10 caractères et maximun 255.</p>
+                        )}
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary" id="btnContact" disabled={!valide}>Envoyer</button>

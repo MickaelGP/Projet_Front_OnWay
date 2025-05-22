@@ -50,3 +50,30 @@ export const verifAge = (date: string) =>{
   }
   return resultat
 }
+export const valideTitreContact = (unTitre: string) =>{
+  let resultat;
+  if(unTitre.length >= 5){
+    resultat = true;
+  }else{
+    resultat = false;
+  }
+  return resultat
+}
+export const valideMessageContact = (unMessage: string) =>{
+  let resultat;
+  if(unMessage.length >= 10 && unMessage.length <= 255){
+    resultat = true;
+  }else{
+    resultat = false;
+  }
+  return resultat
+}
+export const valideNom = (unNom: string) =>{
+   let resultat;
+  if(unNom.length >= 5){
+    resultat = true;
+  }else{
+    resultat = false;
+  }
+  return resultat
+}
