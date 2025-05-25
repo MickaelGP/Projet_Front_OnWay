@@ -1,13 +1,16 @@
 "use client"
 
 import { useState } from "react";
+import rechercheCovoitData from '@/interfaces/rechercheCovoitData';
 
-export default function FormRechercheCovoit() {
+type Props = {
+    onResult: (data: rechercheCovoitData[]) => void
+}
+export default function FormRechercheCovoit({ onResult }: Props) {
     const [villeDepart, setVilleDepart] = useState("");
     const [villeArriver, setVilleArriver] = useState("");
     const [covoitDate, setCovoitDate] = useState("");
     const [erreur, setErreur] = useState("");
-    const [success, setSuccess] = useState("");
     // Fonction déclenchée à la soumission du formulaire
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();// Empêche le rechargement de la page
@@ -24,22 +27,22 @@ export default function FormRechercheCovoit() {
             // Si la réponse n’est pas "OK", on gère les erreurs
             if (!resp.ok) {
                 const err = await resp.json();// Récupère l'erreur renvoyée par le backend
-
-                // Exemple de gestion d'erreur spécifique
+                console.log(err.data.status)
+                // Gestion d'erreur spécifique
                 if (err.data.status == 400) {
                     setErreur("Tous les champs sont requis");
+                } else if (err.data.status == 404) {
+                    setErreur("Aucun covoiturage trouvé ");
                 }
-
-                // Message d’erreur générique
-                setErreur(err.data.detail);
             }
-            // Si tout se passe bien, on vide les champs et affiche un message de succès
-            const data = await resp.json();
-            setVilleDepart("");
-            setVilleArriver("");
-            setCovoitDate("");
-            console.log(data)
-            // setSuccess(data.data.message) // Message retourné par l’API
+            else {
+                // Si tout se passe bien, on vide les champs et affiche un message de succès
+                const data = await resp.json();
+                onResult(data.data);
+                setVilleDepart("");
+                setVilleArriver("");
+                setCovoitDate("");
+            }
 
         } catch (err) {
             // Si une erreur réseau ou serveur survient, on l'affiche dans la console
@@ -51,11 +54,6 @@ export default function FormRechercheCovoit() {
         {erreur && (
             <div className="w-50 mt-5 alert alert-danger text-center container">
                 {erreur}
-            </div>
-        )}
-        {success && (
-            <div className="w-50 mt-5 alert alert-success text-center container">
-                {success}
             </div>
         )}
         <div className={`container py-5`}>
