@@ -5,4 +5,5 @@ export const API_ROUTES = {
     inscription: '/inscription',
     contact: '/contact',
     rechercheCovoit: '/recherche-covoiturage',
+    detailsCovoit: '/details/',
 }

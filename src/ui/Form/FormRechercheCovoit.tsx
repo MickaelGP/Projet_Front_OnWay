@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react";
-import rechercheCovoitData from '@/interfaces/rechercheCovoitData';
+import RechercheCovoitData from '@/interfaces/rechercheCovoitData';
 
 type Props = {
-    onResult: (data: rechercheCovoitData[]) => void
+    onResult: (data: RechercheCovoitData[]) => void
 }
 export default function FormRechercheCovoit({ onResult }: Props) {
     const [villeDepart, setVilleDepart] = useState("");

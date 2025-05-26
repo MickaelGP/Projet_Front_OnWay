@@ -1,4 +1,4 @@
-export default interface rechercheCovoitData  {
+export default interface RechercheCovoitData  {
   covoitId: number;
   covoitDate: string;
   covoitPrix: number;

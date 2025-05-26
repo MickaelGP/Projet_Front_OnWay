@@ -1,8 +1,8 @@
 "use client";
-import rechercheCovoitData from '@/interfaces/rechercheCovoitData';
+import RechercheCovoitData from '@/interfaces/rechercheCovoitData';
 import { tempsTrajet, jour, mois } from '@/utils/dateHeure';
 type Props = {
-    data: rechercheCovoitData[];
+    data: RechercheCovoitData[];
 }
 import Link from "next/link";
 export default function CovoitCard({ data }: Props) {
