@@ -23,7 +23,7 @@ export default function InfoUtil({data}: infoDataProps) {
                         <p><strong>Crédit:</strong> {data?.utilCredit}</p>
                     </div>
                     <div className='py-5 text-center'>
-                        <Link href={"#"} className='btn btn-primary'>Modifier vos informations</Link>
+                        <Link href={"/utilisateur/modif-profil/"} className='btn btn-primary'>Modifier vos informations</Link>
                     </div>
                 </div>
             </div>

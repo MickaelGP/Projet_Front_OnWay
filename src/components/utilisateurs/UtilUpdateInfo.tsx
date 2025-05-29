@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
 import InfoProfilUtil from '@/interfaces/infoProfilUtil';
-import InfoUtil from '@/ui/utilisateur/InfoUtil';
-export default function UtilUpdateInfo() {
+import FormModifInfo from '@/ui/utilisateur/form/formModifInfo';
+
+export default function UtilInfoDashboard() {
     const [data, setData] = useState<InfoProfilUtil>();
     useEffect(() => {
         const fetchProfil = async () => {
@@ -17,6 +18,6 @@ export default function UtilUpdateInfo() {
         fetchProfil();
     }, []);
     return (<>
-        {data && <InfoUtil data={data} />}
+        {data && <FormModifInfo data={data} />}
     </>)
 }
