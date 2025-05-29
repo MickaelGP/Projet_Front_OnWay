@@ -8,4 +8,5 @@ export const API_ROUTES = {
     detailsCovoit: '/details/',
     infoProfil:"/info-profil",
     modifProfil:"/update-profil",
+    modifMdp:"/update-mot-de-passe",
 }
