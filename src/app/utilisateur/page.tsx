@@ -1,7 +1,12 @@
+import UtilInfoDashboard from "@/components/utilisateurs/UtilInfoDashboard";
 import { verifToken } from "@/utils/verifCookies"
+// import InfoUtil from "@/ui/utilisateur/InfoUtil";
 export default async function UtilisateurPage() {
     await verifToken();
     return (<>
-        <h1>Bienvenue sur votre espace</h1>
+        <section>
+            {/* <InfoUtil /> */}
+            <UtilInfoDashboard/>
+        </section>
     </>)
 }

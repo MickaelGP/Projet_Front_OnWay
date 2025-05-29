@@ -6,4 +6,5 @@ export const API_ROUTES = {
     contact: '/contact',
     rechercheCovoit: '/recherche-covoiturage',
     detailsCovoit: '/details/',
+    infoProfil:"/info-profil",
 }
