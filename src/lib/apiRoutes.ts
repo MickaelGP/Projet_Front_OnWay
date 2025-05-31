@@ -9,4 +9,5 @@ export const API_ROUTES = {
     infoProfil:"/info-profil",
     modifProfil:"/update-profil",
     modifMdp:"/update-mot-de-passe",
+    supprimerCompte: "/delete-profil",
 }

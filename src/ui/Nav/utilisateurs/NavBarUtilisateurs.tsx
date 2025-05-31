@@ -55,7 +55,7 @@ export default function NavBarUtilisateurs() {
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuProfil">
                                     <li><Link href="/utilisateur/modif-mot-de-passe" className={`dropdown-item`}>Modifier le mot de passe</Link></li>
-                                    <li><Link href="#" className={`dropdown-item`}>Supprimer le profil</Link></li>
+                                    <li><Link href="/utilisateur/supprimer-compte" className={`dropdown-item`}>Supprimer le profil</Link></li>
                                 </ul>
                             </li>
                             <li className="nav-item">
