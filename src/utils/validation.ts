@@ -77,3 +77,25 @@ export const valideNom = (unNom: string) =>{
   }
   return resultat
 }
+
+export const validePlaque = (unePlaque: string) =>{
+  const regex = /^[A-Z]{2}-\d{3}-[A-Z]{2}$/;
+  let resultat;
+  if (regex.test(unePlaque)) {
+    resultat = true;
+  } else {
+    resultat = false;
+  }
+  return resultat;
+}
+
+export const valideEnergie = (uneEnergie: string) =>{
+  const energies = ["Essence", "Diesel", "Electrique"];
+  let resultat;
+  if (energies.includes(uneEnergie)) {
+    resultat = true;
+  } else {
+    resultat = false;
+  }
+  return resultat;
+}

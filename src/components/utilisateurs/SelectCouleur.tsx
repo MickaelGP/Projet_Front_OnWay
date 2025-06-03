@@ -34,7 +34,7 @@ export default function SelectCouleur({ onChange }: Props) {
     return (<>
         <div className="mb-3">
             <label htmlFor="couleurs" className="form-label">Couleur :</label>
-            <select className="form-select" aria-label="Selection genre" required value={selectedCouleur ?? ''} onChange={handleChange}>
+            <select className="form-select" aria-label="Selection genre" id="couleurs" required value={selectedCouleur ?? ''} onChange={handleChange}>
                 <option value="">Sélectionner une couleur</option>
                 {couleurs.map((couleur) => (
                     <option key={couleur.couleurId} value={couleur.couleurId}>

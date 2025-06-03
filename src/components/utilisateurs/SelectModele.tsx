@@ -33,8 +33,8 @@ export default function SelectModeles({ onChange }: Props) {
     }
     return (<>
         <div className="mb-3">
-            <label htmlFor="couleurs" className="form-label">Modèle :</label>
-            <select className="form-select" aria-label="Selection genre" required value={selectedModele ?? ''} onChange={handleChange}>
+            <label htmlFor="modeles" className="form-label">Modèle :</label>
+            <select className="form-select" aria-label="Selection genre" id="modeles" required value={selectedModele ?? ''} onChange={handleChange}>
                 <option value="">Sélectionner un modèle</option>
                 {modeles.map((modele) => (
                     <option key={modele.modeleId} value={modele.modeleId}>
