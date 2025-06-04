@@ -12,5 +12,6 @@ export const API_ROUTES = {
     supprimerCompte: "/delete-profil",
     couleurs:'/couleurs',
     modeles:"/modeles",
-    ajoutVoiture: "/ajout-voitures"
+    ajoutVoiture: "/ajout-voitures",
+    listeVoitures: "/liste-voitures"
 }
