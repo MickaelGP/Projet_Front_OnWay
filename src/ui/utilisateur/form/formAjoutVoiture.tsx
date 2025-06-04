@@ -1,7 +1,7 @@
 "use client";
 import SelectCouleur from "@/components/utilisateurs/SelectCouleur";
 import SelectModeles from "@/components/utilisateurs/SelectModele";
-import { validePlaque } from "@/utils/validation";
+import { validePlaque, valideEnergie, valideNombreSiege } from "@/utils/validation";
 import { useState, useEffect } from "react";
 export default function FormAjoutVoiture() {
     const [voitCouleur, setVoitCouleur] = useState<number | null>(null);
@@ -55,9 +55,9 @@ export default function FormAjoutVoiture() {
     }
 
     useEffect(() => {
-        setValide(validePlaque(voitPlaque))
+        setValide(validePlaque(voitPlaque) && valideEnergie(voitEnergie) && valideNombreSiege(voitNbSiege))
 
-    }, [voitPlaque]);
+    }, [voitPlaque, voitEnergie, voitNbSiege]);
     return (<>
         <div className="container my-5">
             {erreur && (
@@ -74,7 +74,15 @@ export default function FormAjoutVoiture() {
             <form onSubmit={handelSubmit} action="">
                 <div className="mb-3">
                     <label htmlFor="energie" className="form-label">Energie :</label>
-                    <input type="text" className="form-control" id="energie" name="voitEnergie" required value={voitEnergie} onChange={(e) => setVoitEnergie(e.target.value)} />
+                    <select className="form-select" aria-label="Sélectionner un type d'énergie" id="energie" required value={voitEnergie} onChange={(e) => setVoitEnergie(e.target.value)}>
+                        <option value="">Type d&apos;énergie</option>
+                        <option value="Essence">Essence</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Electrique">Électrique</option>
+                    </select>
+                    {voitEnergie && !valideEnergie(voitEnergie) && (
+                        <p className="text-danger">Format invalide</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="plaque" className="form-label">Plaque d&apos;immatriculation :</label>
@@ -86,6 +94,9 @@ export default function FormAjoutVoiture() {
                 <div className="mb-3">
                     <label htmlFor="nbSiege" className="form-label">Nombre de siége :</label>
                     <input type="number" className="form-control" id="nbSiege" name="voitNbSiege" required value={voitNbSiege} onChange={(e) => setVoitNbSiege(e.target.value)} />
+                    {voitNbSiege && !valideNombreSiege(voitNbSiege) && (
+                        <p className="text-danger">Le nombre de sièges doit être compris entre 1 et 7</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="immat" className="form-label">Année</label>

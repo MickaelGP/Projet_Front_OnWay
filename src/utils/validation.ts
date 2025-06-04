@@ -99,3 +99,13 @@ export const valideEnergie = (uneEnergie: string) =>{
   }
   return resultat;
 }
+
+export const valideNombreSiege = (nbSiege: string) => {
+  let resultat;
+  if (parseInt(nbSiege) >= 1 && parseInt(nbSiege) <= 7) {
+    resultat = true;
+  } else {
+    resultat = false;
+  }
+  return resultat;
+}
