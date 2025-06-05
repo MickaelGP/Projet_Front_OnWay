@@ -13,5 +13,6 @@ export const API_ROUTES = {
     couleurs:'/couleurs',
     modeles:"/modeles",
     ajoutVoiture: "/ajout-voitures",
-    listeVoitures: "/liste-voitures"
+    listeVoitures: "/liste-voitures",
+    ajouterCovoiturage: "/ajouter-covoiturage"
 }

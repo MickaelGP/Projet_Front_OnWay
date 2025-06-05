@@ -27,6 +27,50 @@ export default function FormAjoutVoiture() {
         setVoitId(value);
     }
     //
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try{
+            const response = await fetch("/api/utilisateur/ajouterCovoit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    voitId,
+                    covoitDate,
+                    adresseNumDepart,
+                    adresseRueDepart,
+                    adresseCpDepart,
+                    adresseVilleDepart,
+                    adresseNumArriver,
+                    adresseRueArriver,
+                    adresseCpArriver,
+                    adresseVilleArriver,
+                    covoitPrix,
+                    covoitDep,
+                    covoitArr,
+                    covoitFumer,
+                    covoitAnimaux,
+                    covoitMusique
+                })
+            });
+            if (!response.ok) {
+                const error = await response.json();
+                if (error.data.status === 400) {
+                    setErreur("Tous les champs sont obligatoires.");
+                    return;
+                }
+                setErreur(error.data.detail);
+                return;
+            }
+            const data = await response.json();
+            setSuccess(data.data.message);
+
+        }catch (error) {
+            console.error("Erreur lors de l'ajout du covoiturage :", error);
+            setErreur("Une erreur est survenue lors de l'ajout du covoiturage.");
+        }
+    }
     console.log("covoitFumer", covoitFumer);
     return (<>
         <section className="container my-5">
@@ -41,7 +85,7 @@ export default function FormAjoutVoiture() {
                 </div>
             )}
             <h1 className="text-center my-5">Ajouter un covoiturage</h1>
-            <form action="">
+            <form onSubmit={handleSubmit} action="">
                 <div className="mb-3">
                     <label htmlFor="covoitDate" className="form-label">Date du covoiturage :</label>
                     <input type="date" className="form-control" id="covoitDate" name="covoitDate" required value={covoitDate} onChange={(e) => setCovoitDate(e.target.value)} />
