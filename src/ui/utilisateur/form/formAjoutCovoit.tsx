@@ -1,7 +1,13 @@
 "use client";
+// Importation des composants
 import VoitureUtil from "@/components/utilisateurs/VoitureUtil";
+// Importation des fonctions de validations
+import { valideCpVille, valideAdresse } from "@/utils/validation";
+// Importation des hooks React
 import { useState, useEffect } from "react";
+
 export default function FormAjoutVoiture() {
+    // Etat pour les champs du formulaire
     const [voitId, setVoitId] = useState<number | null>(null);
     const [covoitDate, setCovoitDate] = useState<string>("");
     const [adresseNumDepart, setAdresseNumDepart] = useState<string>("");
@@ -18,18 +24,27 @@ export default function FormAjoutVoiture() {
     const [covoitFumer, setCovoitFumer] = useState<boolean>(false);
     const [covoitAnimaux, setCovoitAnimaux] = useState<boolean>(false);
     const [covoitMusique, setCovoitMusique] = useState<boolean>(false);
-    //
+
+    // Etat pour la validation et les messages
     const [erreur, setErreur] = useState<string>("");
     const [success, setSuccess] = useState<string>("");
     const [valide, setValide] = useState<boolean>(false);
-    //
+
+    // Fonction pour gérer la sélection de la voiture
     const handleSelectChangeVoiture = (value: number) => {
         setVoitId(value);
     }
-    //
+
+    // Validation les champs du formulaire
+    useEffect(() => {
+        setValide(valideCpVille(adresseCpDepart) && valideCpVille(adresseCpArriver) && valideAdresse(adresseRueDepart) && valideAdresse(adresseRueArriver) && valideAdresse(adresseVilleArriver) && valideAdresse(adresseVilleDepart) && parseFloat(covoitPrix) > 0)
+    }, [adresseCpArriver, adresseCpDepart, adresseRueArriver, adresseRueDepart, adresseVilleArriver, adresseVilleDepart, covoitPrix]);
+
+    // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        // Empêche le rechargement de la page
         e.preventDefault();
-        try{
+        try {
             const response = await fetch("/api/utilisateur/ajouterCovoit", {
                 method: "POST",
                 headers: {
@@ -54,24 +69,53 @@ export default function FormAjoutVoiture() {
                     covoitMusique
                 })
             });
+            // Vérifie si la réponse est correcte
             if (!response.ok) {
+                // Si la réponse n'est pas correcte, on récupère le message d'erreur
                 const error = await response.json();
+                // Gère les erreurs spécifiques
                 if (error.data.status === 400) {
+                    // Si le statut est 400, on affiche un message d'erreur générique
                     setErreur("Tous les champs sont obligatoires.");
                     return;
+                } else if (error.data.status === 409) {
+                    // Si le statut est 409, on affiche un message d'erreur spécifique
+                    setErreur(error.data.detail);
+                    return;
                 }
+                // Pour les autres erreurs, on affiche le détail de l'erreur
                 setErreur(error.data.detail);
                 return;
             }
+
+            // Si la réponse est correcte, on récupère le message de succès
             const data = await response.json();
+
+            // On affiche le message de succès
             setSuccess(data.data.message);
 
-        }catch (error) {
+            // On réinitialise les champs du formulaire
+            setCovoitDate("");
+            setAdresseNumDepart("");
+            setAdresseRueDepart("");
+            setAdresseCpDepart("");
+            setAdresseVilleDepart("");
+            setAdresseNumArriver("");
+            setAdresseRueArriver("");
+            setAdresseCpArriver("");
+            setAdresseVilleArriver("");
+            setCovoitPrix("");
+            setCovoitDep("");
+            setCovoitArr("");
+            setVoitId(null);
+            setCovoitFumer(false);
+            setCovoitAnimaux(false);
+            setCovoitMusique(false);
+        } catch (error) {
             console.error("Erreur lors de l'ajout du covoiturage :", error);
             setErreur("Une erreur est survenue lors de l'ajout du covoiturage.");
         }
     }
-    console.log("covoitFumer", covoitFumer);
     return (<>
         <section className="container my-5">
             {erreur && (
@@ -97,14 +141,23 @@ export default function FormAjoutVoiture() {
                 <div className="mb-3">
                     <label htmlFor="adresseRueDepart" className="form-label">Rue de départ :</label>
                     <input type="text" className="form-control" id="adresseRueDepart" name="adresseRueDepart" required value={adresseRueDepart} onChange={(e) => setAdresseRueDepart(e.target.value)} />
+                    {adresseRueDepart && !valideAdresse(adresseRueDepart) && (
+                        <p className="text-danger">Il faut entre 3 et 60 caractères.</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="adresseCpDepart" className="form-label">Code postal :</label>
-                    <input type="number" className="form-control" id="adresseCpDepart" name="adresseCpDepart" required value={adresseCpDepart} onChange={(e) => setAdresseCpDepart(e.target.value)} />
+                    <input type="text" className="form-control" id="adresseCpDepart" name="adresseCpDepart" required value={adresseCpDepart} onChange={(e) => setAdresseCpDepart(e.target.value)} />
+                    {adresseCpDepart && !valideCpVille(adresseCpDepart) && (
+                        <p className="text-danger">Format invalide le code postal doit comporter 6 caractères.</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="adresseVilleDepart" className="form-label">Ville de départ :</label>
                     <input type="text" className="form-control" id="adresseVilleDepart" name="adresseVilleDepart" required value={adresseVilleDepart} onChange={(e) => setAdresseVilleDepart(e.target.value)} />
+                    {adresseVilleDepart && !valideAdresse(adresseVilleDepart) && (
+                        <p className="text-danger">Il faut entre 3 et 60 caractères.</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="adresseNumArriver" className="form-label">Numéros de la rue d&apos;arrivée :</label>
@@ -113,18 +166,30 @@ export default function FormAjoutVoiture() {
                 <div className="mb-3">
                     <label htmlFor="adresseRueArriver" className="form-label">Rue d&apos;arrivée :</label>
                     <input type="text" className="form-control" id="adresseRueArriver" name="adresseRueArriver" required value={adresseRueArriver} onChange={(e) => setAdresseRueArriver(e.target.value)} />
+                    {adresseRueArriver && !valideAdresse(adresseRueArriver) && (
+                        <p className="text-danger">Il faut entre 3 et 60 caractères.</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="adresseCpArriver" className="form-label">Code postal :</label>
-                    <input type="number" className="form-control" id="adresseCpArriver" name="adresseCpArriver" required value={adresseCpArriver} onChange={(e) => setAdresseCpArriver(e.target.value)} />
+                    <input type="text" className="form-control" id="adresseCpArriver" name="adresseCpArriver" required value={adresseCpArriver} onChange={(e) => setAdresseCpArriver(e.target.value)} />
+                    {adresseCpArriver && !valideCpVille(adresseCpArriver) && (
+                        <p className="text-danger">Format invalide le code postal doit comporter 6 caractères.</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="adresseVilleArriver" className="form-label">Ville d&apos;arrivée :</label>
                     <input type="text" className="form-control" id="adresseVilleArriver" name="adresseVilleArriver" required value={adresseVilleArriver} onChange={(e) => setAdresseVilleArriver(e.target.value)} />
+                    {adresseVilleArriver && !valideAdresse(adresseVilleArriver) && (
+                        <p className="text-danger">Il faut entre 3 et 60 caractères.</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="covoitPrix" className="form-label">Prix :</label>
                     <input type="number" className="form-control" id="covoitPrix" name="covoitPrix" required value={covoitPrix} onChange={(e) => setCovoitPrix(e.target.value)} />
+                    {covoitPrix && parseFloat(covoitPrix) === 0 && (
+                        <p className="text-danger">Le prix est obligatoire et ne peut pas être a zero</p>
+                    )}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="covoitDep" className="form-label">Heure de départ :</label>

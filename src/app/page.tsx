@@ -8,14 +8,14 @@ export default function Home() {
       <section className={styles.heroSection}>
         <h1>OnWay</h1>
       </section>
-      <div className={styles.sectionSearchBar}>
+      {/* <div className={styles.sectionSearchBar}>
         <div className={styles.searchBar}>
           <input type="text" name="villeDepart" id="villeDepart" placeholder="Départ" />
           <input type="text" name="villeArriver" id="villeArriver" placeholder="Destination" />
           <input type="date" name="covoitDate" id="covoitDate" />
           <input type="button" value="Rechercher" />
         </div>
-      </div>
+      </div> */}
       <section className={styles.sectionTrajet}>
         <div>
           <h2>Vos trajets à petits prix</h2>
@@ -25,7 +25,7 @@ export default function Home() {
           </p>
         </div>
         <div className={styles.imageTrajet}>
-          <img src="/img/imageTrajet.JPG" alt="" />
+          <img src="/img/imageTrajet.JPG" alt="Image de trajet" />
         </div>
       </section>
       <section className={styles.sectionSecurite}>
@@ -38,7 +38,7 @@ export default function Home() {
           </p>
         </div>
         <div className={styles.imageCouple}>
-          <img src="/img/imageCouple.png" alt="" />
+          <img src="/img/imageCouple.png" alt="Image de couple" />
         </div>
       </section>
       <section className={styles.sectionTrajetDirect}>

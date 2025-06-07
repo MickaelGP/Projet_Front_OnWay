@@ -42,9 +42,16 @@ export default function FormAjoutVoiture() {
             }
             const data = await response.json();
             setSuccess(data.data.message);
-
+            setVoitEnergie("");
+            setVoitPlaque("");
+            setVoitNbSiege("");
+            setVoitDateImat("");
+            setVoitCouleur(null);
+            setVoitModele(null);
+            setValide(false);
         } catch (error) {
             console.error("Erreur lors de l'ajout de la voiture :", error);
+            setErreur("Une erreur est survenue lors de l'ajout de la voiture.");
         }
     }
     const handelSelectChangeModele = (value: number) => {

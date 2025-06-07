@@ -42,7 +42,7 @@ export default function NavBarUtilisateurs() {
                                     Covoiturages
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuCovoit">
-                                    <li><Link href="#" className={`dropdown-item`}>Rechercher</Link></li>
+                                    <li><Link href="/recherche-covoiturage" className={`dropdown-item`}>Rechercher</Link></li>
                                     <li><Link href="/utilisateur/ajouter-voiture" className={`dropdown-item`}>Ajouter une voiture</Link></li>
                                     <li><Link href="/utilisateur/ajouter-covoiturage" className={`dropdown-item`}>Créer un covoiturage</Link></li>
                                     <li><Link href="#" className={`dropdown-item`}>Modifier un covoiturage</Link></li>

@@ -16,6 +16,9 @@ export default function NavBar() {
                             <li className="nav-item">
                                 <Link href="/" className={`${styles.navLinkColor} nav-link`}>Accueil</Link>
                             </li>
+                             <li className="nav-item">
+                                <Link href="/recherche-covoiturage" className={`${styles.navLinkColor} nav-link`}>Rechercher un covoiturage</Link>
+                            </li>
                             <li className="nav-item">
                                 <Link href="/contact" className={`${styles.navLinkColor} nav-link`}>Contact</Link>
                             </li>

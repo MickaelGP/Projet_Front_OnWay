@@ -16,6 +16,7 @@ export default function NavBar() {
         </button>
         <div className={`${styles.menu} ${ouvert ? styles.ouvert : ''}`}>
             <Link href="/">Accueil</Link>
+            <Link href="/recherche-covoiturage">Rechercher un covoiturage</Link>
             <Link href="/contact">Contact</Link>
             <Link href="/inscription">Inscription</Link>
             <Link href="/connexion">Connexion</Link>
