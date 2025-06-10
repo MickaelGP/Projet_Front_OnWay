@@ -16,7 +16,7 @@ export default function FormConnexion() {
     useEffect(() => {
         setValide(validationEmail(utilEmail) && validationMdp(utilMdp));
     }, [utilEmail, utilMdp]); // Le hook est déclenché à chaque changement de ces champ
-    
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
@@ -47,6 +47,12 @@ export default function FormConnexion() {
 
             const data = await resp.json();
             if (data.data.utilisateur.roleLabel === "Passager") {
+                if (window.localStorage.getItem("covoitPath")) {
+                    const path = window.localStorage.getItem("covoitPath");
+                    router.push(path as string);
+                    window.localStorage.removeItem("covoitPath");
+                    return;
+                }
                 router.push("/utilisateur");
             } else if (data.data.utilisateur.roleLabel === "Admin") {
                 router.push("/admin");
@@ -69,12 +75,14 @@ export default function FormConnexion() {
             <div className="container w-75 py-5">
                 <form onSubmit={handleSubmit} className="my-5">
                     <div className="mb-3">
+                        <label htmlFor="utilEmail" className="form-label">Votre email :</label>
                         <input type="email" className="form-control" name="utilEmail" id="connexionEmail" placeholder="Email :" required value={utilEmail} onChange={(e) => setUtilEmail(e.target.value)} />
                         {utilEmail && !validationEmail(utilEmail) && (
                             <p className="text-danger">Format invalide</p>
                         )}
                     </div>
                     <div className="mb-3">
+                        <label htmlFor="utilMdp" className="form-label">Votre mot de passe :</label>
                         <input type="password" className="form-control" name="utilMdp" id="connexionPassword" placeholder="Mot de passe :" required value={utilMdp} onChange={(e) => setUtilMdp(e.target.value)} />
                         {utilMdp && !validationMdp(utilMdp) && (
                             <p className="text-danger">Le mot de passe doit comporter au minimun 8 carractéres, un chiffre et un carractéres spécial</p>

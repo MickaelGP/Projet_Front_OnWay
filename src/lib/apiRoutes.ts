@@ -14,5 +14,6 @@ export const API_ROUTES = {
     modeles:"/modeles",
     ajoutVoiture: "/ajout-voitures",
     listeVoitures: "/liste-voitures",
-    ajouterCovoiturage: "/ajouter-covoiturage"
+    ajouterCovoiturage: "/ajouter-covoiturage",
+    reserverCovoit: "/participer-covoiturage",
 }

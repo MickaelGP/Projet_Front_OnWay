@@ -6,7 +6,7 @@ import { valideCpVille, valideAdresse } from "@/utils/validation";
 // Importation des hooks React
 import { useState, useEffect } from "react";
 
-export default function FormAjoutVoiture() {
+export default function FormAjoutCovoit() {
     // Etat pour les champs du formulaire
     const [voitId, setVoitId] = useState<number | null>(null);
     const [covoitDate, setCovoitDate] = useState<string>("");

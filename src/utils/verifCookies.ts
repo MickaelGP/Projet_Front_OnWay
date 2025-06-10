@@ -7,3 +7,15 @@ export const verifToken = async () => {
     redirect("/connexion");
   }
 };
+
+export const connecter = async () =>{
+  const cookieStore = await cookies();
+  const cookieToken = cookieStore.get("session_token");
+  let result : boolean;
+  if (cookieToken === undefined) {
+    result = false;
+  } else {
+    result = true;
+  }
+  return result;
+}

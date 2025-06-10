@@ -106,7 +106,7 @@ export default function FormAjoutVoiture() {
                     )}
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="immat" className="form-label">Année</label>
+                    <label htmlFor="immat" className="form-label">Année d&apos;imatriculation</label>
                     <input type="date" className="form-control" id="immat" name="voitDateImat" required value={voitDateImat} onChange={(e) => setVoitDateImat(e.target.value)} />
                 </div>
                 <SelectCouleur onChange={handelSelectChangeCouleur} />
