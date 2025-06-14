@@ -18,5 +18,6 @@ export const API_ROUTES = {
     reserverCovoit: "/participer-covoiturage",
     listeComptes: "/liste-comptes",
     detailsCompte: "/details-compte/",
-    majStatut: "/update-compte"
+    majStatut: "/update-compte",
+    ajoutEmploye: "/ajout-compte-employé"
 }
