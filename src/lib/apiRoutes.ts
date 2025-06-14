@@ -19,5 +19,6 @@ export const API_ROUTES = {
     listeComptes: "/liste-comptes",
     detailsCompte: "/details-compte/",
     majStatut: "/update-compte",
-    ajoutEmploye: "/ajout-compte-employé"
+    ajoutEmploye: "/ajout-compte-employé",
+    deleteCompte : "/delete-compte-employé"
 }

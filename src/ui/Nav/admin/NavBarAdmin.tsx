@@ -41,7 +41,7 @@ export default function NavBarAdmin() {
                                 <Link href="/admin/liste-comptes" className={`${styles.navLinkColor} nav-link`}>Voir les comptes</Link>
                             </li>
                             <li className="nav-item">
-                                <Link href="#" className={`${styles.navLinkColor} nav-link`}>Ajouter un employé</Link>
+                                <Link href="/admin/ajouter-un-employe" className={`${styles.navLinkColor} nav-link`}>Ajouter un employé</Link>
                             </li>
                             <li className="nav-item">
                                 <button className={`${styles.navLinkColor} nav-link`} onClick={handelLogout}>Déconnexion</button>
