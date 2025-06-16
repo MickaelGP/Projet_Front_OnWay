@@ -45,8 +45,8 @@ export default function NavBarUtilisateurs() {
                                     <li><Link href="/recherche-covoiturage" className={`dropdown-item`}>Rechercher</Link></li>
                                     <li><Link href="/utilisateur/ajouter-voiture" className={`dropdown-item`}>Ajouter une voiture</Link></li>
                                     <li><Link href="/utilisateur/ajouter-covoiturage" className={`dropdown-item`}>Créer un covoiturage</Link></li>
-                                    <li><Link href="#" className={`dropdown-item`}>Modifier un covoiturage</Link></li>
-                                    <li><Link href="#" className={`dropdown-item`}>Supprimer un covoiturage</Link></li>
+                                    <li><Link href="/utilisateur/mes-trajets" className={`dropdown-item`}>Mes trajets</Link></li>
+                                    <li><Link href="#" className={`dropdown-item`}>Mes participations</Link></li>
                                 </ul>
                             </li>
                             <li className={`nav-item dropdown`}>
