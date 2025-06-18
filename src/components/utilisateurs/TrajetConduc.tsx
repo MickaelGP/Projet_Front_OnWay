@@ -44,7 +44,7 @@ export default function TrajetConduc(){
                             </p>
                             {trajet.covoitStatut === "En attente" && (
                                 <div className="d-flex justify-content-center gap-3">
-                                    <Link href={`/trajets/modifier/${trajet.covoitId}`} className="btn btn-primary">
+                                    <Link href={`/utilisateur/mes-trajets/${trajet.covoitId}`} className="btn btn-primary">
                                         Modifier
                                     </Link>
                                     <button className="btn btn-danger">Supprimer</button>
@@ -52,7 +52,7 @@ export default function TrajetConduc(){
                             )}
                              {trajet.covoitStatut === "Démarrer" && (
                                 <div className="d-flex justify-content-center gap-3">
-                                    <Link href={`/trajets/modifier/${trajet.covoitId}`} className="btn btn-primary">
+                                    <Link href={`/utilisateur/mes-trajets/${trajet.covoitId}`} className="btn btn-primary">
                                         Modifier
                                     </Link>
                                 </div>

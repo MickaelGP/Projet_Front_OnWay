@@ -22,4 +22,5 @@ export const API_ROUTES = {
     ajoutEmploye: "/ajout-compte-employé",
     deleteCompte : "/delete-compte-employé",
     trajetConduc: "/les-covoiturages",
+    detailTrajet: "/update-covoiturage/"
 }
