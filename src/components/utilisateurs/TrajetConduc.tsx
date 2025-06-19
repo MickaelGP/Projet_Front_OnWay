@@ -50,7 +50,7 @@ export default function TrajetConduc(){
                                     <button className="btn btn-danger">Supprimer</button>
                                 </div>
                             )}
-                             {trajet.covoitStatut === "Démarrer" && (
+                             {trajet.covoitStatut === "Démarré" && (
                                 <div className="d-flex justify-content-center gap-3">
                                     <Link href={`/utilisateur/mes-trajets/${trajet.covoitId}`} className="btn btn-primary">
                                         Modifier
