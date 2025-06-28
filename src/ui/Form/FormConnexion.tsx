@@ -5,21 +5,26 @@ import { useRouter } from 'next/navigation';
 export default function FormConnexion() {
     const router = useRouter();
 
+    // État pour stocker l'email saisi par l'utilisateur
     const [utilEmail, setUtilEmail] = useState<string>('');
+    // État pour stocker le mot de passe saisi par l'utilisateur
     const [utilMdp, setUtilMdp] = useState<string>('');
 
-    // États pour la validation générale, les erreurs et les messages de succès
+    // État pour savoir si le formulaire est valide
     const [valide, setValide] = useState(false);
+    // État pour afficher un message d'erreur si besoin
     const [erreur, setErreur] = useState<string>('');
 
-    // useEffect permet de vérifier la validité globale du formulaire à chaque changement des champs concernés
+    // Vérifie si l'email et le mot de passe sont valides à chaque modification
     useEffect(() => {
         setValide(validationEmail(utilEmail) && validationMdp(utilMdp));
-    }, [utilEmail, utilMdp]); // Le hook est déclenché à chaque changement de ces champ
+    }, [utilEmail, utilMdp]); // Ce code s'exécute à chaque fois que l'email ou le mot de passe change
 
+    // Fonction appelée lors de la soumission du formulaire
     const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+        event.preventDefault(); // Empêche le rechargement de la page
         try {
+            // Envoie une requête POST à l'API pour tenter de se connecter
             const resp = await fetch('/api/connexion/', {
                 method: 'POST',
                 headers: {
@@ -28,11 +33,11 @@ export default function FormConnexion() {
                 body: JSON.stringify({ utilEmail, utilMdp })
             });
 
-            // Si la réponse n’est pas "OK", on gère les erreurs
+            // Si la connexion échoue, on affiche un message d'erreur adapté
             if (!resp.ok) {
-                const err = await resp.json();// Récupère l'erreur renvoyée par le backend
+                const err = await resp.json(); // On récupère l'erreur envoyée par le backend
 
-                // Exemple de gestion d'erreur spécifique
+                // Gestion des différents cas d'erreur
                 if (err.data.status == 400) {
                     setErreur("Tous les champs sont requis");
                     return;
@@ -45,7 +50,10 @@ export default function FormConnexion() {
                 }
             }
 
+            // Si la connexion réussit, on récupère les données de l'utilisateur
             const data = await resp.json();
+
+            // Si l'utilisateur est un passager, on le redirige vers la page précédente ou vers /utilisateur
             if (data.data.utilisateur.roleLabel === "Passager") {
                 if (window.localStorage.getItem("covoitPath")) {
                     const path = window.localStorage.getItem("covoitPath");
@@ -55,12 +63,15 @@ export default function FormConnexion() {
                 }
                 router.push("/utilisateur");
             } else if (data.data.utilisateur.roleLabel === "Admin") {
+                // Si l'utilisateur est un admin, on le redirige vers la page admin
                 router.push("/admin");
             }
+            // On vide les champs du formulaire après la connexion
             setUtilEmail("");
             setUtilMdp("");
 
         } catch (err) {
+            // Affiche une erreur en cas de problème réseau ou autre
             console.log(err);
         }
     }

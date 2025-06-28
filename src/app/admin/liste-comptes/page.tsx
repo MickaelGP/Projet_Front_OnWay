@@ -1,7 +1,7 @@
 import ListeCompte from "@/components/admin/ListeComptes";
-import { verifToken } from "@/utils/verifCookies";
+//import { verifToken } from "@/utils/verifCookies";
 export default async function ListeComptePage(){
-    await verifToken();
+    //await verifToken();
     return(<>
         <ListeCompte/>
     </>)

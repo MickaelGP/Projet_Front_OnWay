@@ -22,7 +22,7 @@ export async function DELETE(request: NextRequest) {
   }
 
   const { utilId } = await request.json();
-  console.log(utilId);
+  
   const apiExterne = await fetch(API_URL + API_ROUTES.deleteCompte, {
     method: "DELETE", // Méthode HTTP
     headers,
