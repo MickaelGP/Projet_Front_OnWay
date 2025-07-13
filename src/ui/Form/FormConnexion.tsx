@@ -36,10 +36,9 @@ export default function FormConnexion() {
             // Si la connexion échoue, on affiche un message d'erreur adapté
             if (!resp.ok) {
                 const err = await resp.json(); // On récupère l'erreur envoyée par le backend
-
                 // Gestion des différents cas d'erreur
-                if (err.data.status == 400) {
-                    setErreur("Tous les champs sont requis");
+                if (resp.status == 400) {
+                    setErreur(err.error);
                     return;
                 } else if (err.data.status == 401) {
                     setErreur(err.data.detail);

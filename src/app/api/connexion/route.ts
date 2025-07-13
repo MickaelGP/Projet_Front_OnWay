@@ -6,10 +6,17 @@ import { NextResponse } from "next/server";
 // Importe les constantes pour l'URL de l'API et les routes
 import { API_ROUTES, API_URL } from "@/lib/apiRoutes";
 
+import { validationMdp, validationEmail } from "@/utils/validation";
 // Fonction qui gère la requête POST pour la connexion
 export async function POST(request: Request) {
   // Récupère les données envoyées dans le corps de la requête (email et mot de passe)
   const { utilEmail, utilMdp } = await request.json();
+
+  // Vérifie si l'email et le mot de passe sont valides
+  if (!validationEmail(utilEmail) || !validationMdp(utilMdp)) {
+    // Si l'email ou le mot de passe est invalide, retourne une erreur 400
+    return NextResponse.json({ error: "Format d'email ou de mot de passe invalide." },{ status: 400 });
+  }
 
   // Envoie une requête POST à l'API externe pour vérifier les identifiants
   const apiExterne = await fetch(API_URL + API_ROUTES.connexion, {
