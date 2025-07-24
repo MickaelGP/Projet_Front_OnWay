@@ -1,7 +1,7 @@
 "use client"
 // Import des hooks React nécessaires et des fonctions de validation personnalisées
 import { useState, useEffect } from "react";
-import { validationEmail, validationMdp, mdpIdentique, verifAge } from '@/utils/validation';
+import { validationEmail, validationMdp, mdpIdentique, verifAge, valideNom } from '@/utils/validation';
 
 export default function FormInscription() {
     // Déclaration des états (state) pour chaque champ du formulaire
@@ -19,8 +19,8 @@ export default function FormInscription() {
 
     // useEffect permet de vérifier la validité globale du formulaire à chaque changement des champs concernés
     useEffect(() => {
-        setValide(validationEmail(UtilEmail) && validationMdp(UtilMdp) && mdpIdentique(UtilMdp, UtilMdpConfirm) && verifAge(UtilNaissance));
-    }, [UtilEmail, UtilMdp, UtilMdpConfirm, UtilNaissance]); // Le hook est déclenché à chaque changement de ces champ
+        setValide(validationEmail(UtilEmail) && validationMdp(UtilMdp) && mdpIdentique(UtilMdp, UtilMdpConfirm) && verifAge(UtilNaissance) && valideNom(UtilPseudo));
+    }, [UtilEmail, UtilMdp, UtilMdpConfirm, UtilNaissance, UtilPseudo]); // Le hook est déclenché à chaque changement de ces champ
 
     // Fonction déclenchée à la soumission du formulaire
     const handleSubmit = async (event: React.FormEvent) => {
@@ -34,14 +34,15 @@ export default function FormInscription() {
                 },
                 body: JSON.stringify({ UtilEmail, UtilMdp, UtilPseudo, UtilGenre, UtilNaissance }) // Seuls les champs requis par l’API sont envoyés
             });
-
+           
             // Si la réponse n’est pas "OK", on gère les erreurs
             if (!resp.ok) {
                 const err = await resp.json();// Récupère l'erreur renvoyée par le backend
-
+                console.log(err)
                 // Exemple de gestion d'erreur spécifique
-                if (err.data.status == 400) {
-                    setErreur("Tous les champs sont requis");
+                if (err.error) {
+                    setErreur(err.error);
+                    return
                 }
 
                 // Message d’erreur générique
@@ -79,6 +80,9 @@ export default function FormInscription() {
                 <form onSubmit={handleSubmit} className="my-5">
                     <div className="mb-3">
                         <input type="text" className="form-control" name="UtilPseudo" id="inscriptionPseudo" placeholder="Pseudo :" required value={UtilPseudo} onChange={(e) => setUtilPseudo(e.target.value)} />
+                        {UtilPseudo && !valideNom(UtilPseudo) && (
+                            <p className="text-danger">Le pseudo doit être compris entre 5 et 10 carractéres</p>
+                        )}
                     </div>
                     <div className="mb-3">
                         <input type="email" className="form-control" name="UtilEmail" id="inscriptionEmail" placeholder="Email :" required value={UtilEmail} onChange={(e) => setUtilEmail(e.target.value)} />
@@ -102,7 +106,7 @@ export default function FormInscription() {
                         <label htmlFor="inscriptionNaissance" className="form-label">Votre date de naissance</label>
                         <input type="date" className="form-control" name="UtilNaissance" id="inscriptionNaissance" required value={UtilNaissance} onChange={(e) => setUtilNaissance(e.target.value)} />
                         {UtilNaissance && !verifAge(UtilNaissance) && (
-                            <p className="text-danger">Vous n'êtes pas majeur</p>
+                            <p className="text-danger">Vous n&apos;êtes pas majeur</p>
                         )}
                     </div>
                     <div className="mb-3">

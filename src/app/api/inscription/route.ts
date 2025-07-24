@@ -7,12 +7,16 @@ import { NextResponse } from "next/server";
 // Importe les constantes de l’application contenant l’URL de l’API et les routes
 import { API_ROUTES, API_URL } from "@/lib/apiRoutes";
 
+import { validationMdp, validationEmail, verifAge, valideNom } from "@/utils/validation";
+
 // Fonction asynchrone appelée lorsqu'une requête POST est reçue sur cette route
 export async function POST(request: Request){
 
     // Récupère les données JSON envoyées dans le corps de la requête
     const { UtilEmail, UtilMdp, UtilPseudo, UtilGenre, UtilNaissance } = await request.json();
-
+    if(!validationEmail(UtilEmail) || !validationMdp(UtilMdp) || !verifAge(UtilNaissance) || !valideNom(UtilPseudo)){
+      return NextResponse.json({ error: "Les informtaions sont incorrects" },{ status: 400 });
+    }
     // Effectue un appel à une API externe avec les données reçues
     const apiExterne = await fetch(API_URL + API_ROUTES.inscription, {
       method: "POST",// Méthode HTTP
