@@ -3,6 +3,6 @@ export default interface ListeComptes{
     utilNom: string,
     utilPseudo: string,
     utilEmail: string,
-    utilSuspendu: string,
+    utilSuspendu: boolean,
     roleLabel: string
 }

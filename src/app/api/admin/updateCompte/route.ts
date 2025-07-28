@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { API_ROUTES, API_URL } from "@/lib/apiRoutes";
 
 // Fonction asynchrone appelée lorsqu'une requête PUT est reçue sur cette route
-export async function PUT(request:  NextRequest) {
+export async function PUT(request: NextRequest) {
   // Récupère les cookies envoyés par le navigateur
   const cookieHeader = request.headers.get("cookie");
 
@@ -22,13 +22,17 @@ export async function PUT(request:  NextRequest) {
     headers["Cookie"] = cookieHeader;
   }
   // Récupère les données JSON envoyées dans le corps de la requête
-  const { utilId, utilSuspendu } = await request.json();
+  const infoUtil = await request.json();
 
+  const utilId = infoUtil.utilId;
+
+  const utilSuspendu = infoUtil.utilSuspendu;
+  
   // Effectue un appel à une API externe avec les données reçues
   const apiExterne = await fetch(API_URL + API_ROUTES.majStatut, {
     method: "PUT", // Méthode HTTP
     headers,
-    body: JSON.stringify({ utilId, utilSuspendu }), 
+    body: JSON.stringify({ utilId, utilSuspendu }),
   });
 
   // Attend et récupère la réponse JSON de l’API externe

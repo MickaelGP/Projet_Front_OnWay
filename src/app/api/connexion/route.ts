@@ -10,8 +10,9 @@ import { validationMdp, validationEmail } from "@/utils/validation";
 // Fonction qui gère la requête POST pour la connexion
 export async function POST(request: Request) {
   // Récupère les données envoyées dans le corps de la requête (email et mot de passe)
-  const { utilEmail, utilMdp } = await request.json();
-
+  const body  = await request.json();
+  const utilEmail = body.infoConnexion.utilEmail;
+  const utilMdp = body.infoConnexion.utilMdp;
   // Vérifie si l'email et le mot de passe sont valides
   if (!validationEmail(utilEmail) || !validationMdp(utilMdp)) {
     // Si l'email ou le mot de passe est invalide, retourne une erreur 400
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
       "Content-type": "application/json",
     },
     credentials: "include", // Permet d'inclure les cookies dans la requête
-    body: JSON.stringify({ utilEmail, utilMdp }),
+    body: JSON.stringify({utilEmail, utilMdp}), // Envoie les données de connexion
   });
 
   // Récupère la réponse de l'API externe au format JSON

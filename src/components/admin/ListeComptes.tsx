@@ -1,7 +1,9 @@
 "use client";
 import ListeComptes from "@/interfaces/listeComptes";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import ErreurAlert from "../ErreurAlert";
+import SuccesAlert from "../SuccessAlert";
+import TableauComptes from "@/ui/admin/TableauComptes";
 export default function ListeCompte() {
     const [comptes, setComptes] = useState<ListeComptes[]>([]);
     const [erreur, setErreur] = useState<string>("");
@@ -59,46 +61,14 @@ export default function ListeCompte() {
     return (<>
         <section>
              {erreur && (
-                <div className="w-50 mt-5 alert alert-danger text-center container">
-                    {erreur}
-                </div>
+                <ErreurAlert message={erreur}/>
             )}
             {success && (
-                <div className="w-50 mt-5 alert alert-success text-center container">
-                    {success}
-                </div>
+                <SuccesAlert message={success}/>
             )}
             <h1 className="text-center my-5">Liste des comptes</h1>
             <div className="table-responsive container my-5">
-                <table className="table">
-                    <thead className="text-center">
-                        <tr>
-                            <th>Pseudo</th>
-                            <th>Email</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="text-center">
-                        {comptes.map((compte) => (
-                            <tr key={compte.utilId}>
-                                <th>{compte.utilPseudo}</th>
-                                <td>{compte.utilEmail}</td>
-                                <td>{compte.utilSuspendu ? 'Suspendu' : 'Actif'}</td>
-                                <td className="d-flex gap-2 justify-content-center">
-                                    {compte.roleLabel === 'Passager' || compte.roleLabel === 'Admin' ? (
-                                        <Link href={`/admin/details-compte/${compte.utilId}`} className="btn btn-info">Voir</Link>
-                                    ) : (
-                                        <>
-                                            <Link href={`/admin/details-compte/${compte.utilId}`} className="btn btn-info">Voir</Link>
-                                            <button className="btn btn-danger" type="button" onClick={() => handleDelete(compte.utilId)}>Supprimer</button>
-                                        </>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+               <TableauComptes comptes={comptes} handleDelete={handleDelete} />
             </div>
         </section>
     </>)

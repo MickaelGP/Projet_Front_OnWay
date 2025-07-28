@@ -2,13 +2,14 @@
 import { useState, useEffect } from "react";
 import { validationEmail, validationMdp } from '@/utils/validation';
 import { useRouter } from 'next/navigation';
+import InfoConnexion from '@/interfaces/infoConexion';
 export default function FormConnexion() {
     const router = useRouter();
-
+    const [infoConnexion, setInfoConnexion] = useState<InfoConnexion>({utilEmail: '', utilMdp: ''});
     // État pour stocker l'email saisi par l'utilisateur
-    const [utilEmail, setUtilEmail] = useState<string>('');
+    // const [utilEmail, setUtilEmail] = useState<string>('');
     // État pour stocker le mot de passe saisi par l'utilisateur
-    const [utilMdp, setUtilMdp] = useState<string>('');
+    // const [utilMdp, setUtilMdp] = useState<string>('');
 
     // État pour savoir si le formulaire est valide
     const [valide, setValide] = useState(false);
@@ -17,8 +18,8 @@ export default function FormConnexion() {
 
     // Vérifie si l'email et le mot de passe sont valides à chaque modification
     useEffect(() => {
-        setValide(validationEmail(utilEmail) && validationMdp(utilMdp));
-    }, [utilEmail, utilMdp]); // Ce code s'exécute à chaque fois que l'email ou le mot de passe change
+        setValide(validationEmail(infoConnexion.utilEmail) && validationMdp(infoConnexion.utilMdp));
+    }, [infoConnexion]); // Ce code s'exécute à chaque fois que l'email ou le mot de passe change
 
     // Fonction appelée lors de la soumission du formulaire
     const handleSubmit = async (event: React.FormEvent) => {
@@ -30,7 +31,7 @@ export default function FormConnexion() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ utilEmail, utilMdp })
+                body: JSON.stringify({ infoConnexion })
             });
 
             // Si la connexion échoue, on affiche un message d'erreur adapté
@@ -66,8 +67,9 @@ export default function FormConnexion() {
                 router.push("/admin");
             }
             // On vide les champs du formulaire après la connexion
-            setUtilEmail("");
-            setUtilMdp("");
+            // setUtilEmail("");
+            // setUtilMdp("");
+            setInfoConnexion({utilEmail:'', utilMdp: ''})
 
         } catch (err) {
             // Affiche une erreur en cas de problème réseau ou autre
@@ -86,15 +88,15 @@ export default function FormConnexion() {
                 <form onSubmit={handleSubmit} className="my-5">
                     <div className="mb-3">
                         <label htmlFor="utilEmail" className="form-label">Votre email :</label>
-                        <input type="email" className="form-control" name="utilEmail" id="connexionEmail" placeholder="Email :" required value={utilEmail} onChange={(e) => setUtilEmail(e.target.value)} />
-                        {utilEmail && !validationEmail(utilEmail) && (
+                        <input type="email" className="form-control" name="utilEmail" id="connexionEmail" placeholder="Email :" required value={infoConnexion.utilEmail} onChange={(e) => setInfoConnexion({...infoConnexion, utilEmail: e.target.value})} />
+                        {infoConnexion.utilEmail && !validationEmail(infoConnexion.utilEmail) && (
                             <p className="text-danger">Format invalide</p>
                         )}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="utilMdp" className="form-label">Votre mot de passe :</label>
-                        <input type="password" className="form-control" name="utilMdp" id="connexionPassword" placeholder="Mot de passe :" required value={utilMdp} onChange={(e) => setUtilMdp(e.target.value)} />
-                        {utilMdp && !validationMdp(utilMdp) && (
+                        <input type="password" className="form-control" name="utilMdp" id="connexionPassword" placeholder="Mot de passe :" required value={infoConnexion.utilMdp} onChange={(e) => setInfoConnexion({...infoConnexion, utilMdp: e.target.value})} />
+                        {infoConnexion.utilMdp && !validationMdp(infoConnexion.utilMdp) && (
                             <p className="text-danger">Le mot de passe doit comporter au minimun 8 carractéres, un chiffre et un carractéres spécial</p>
                         )}
                     </div>

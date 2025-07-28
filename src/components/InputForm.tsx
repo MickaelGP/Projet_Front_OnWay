@@ -1,4 +1,5 @@
 type Props = {
+    classDiv?: string;
     id: string;
     type: string;
     value: string;
@@ -7,14 +8,15 @@ type Props = {
     required?: boolean;
     onChange: (value: string) => void;
 }
-export default function InputForm({id, type, value, name, label, onChange, required = false}: Props) {
+export default function InputForm({ id, type, value, name, label, onChange, required = false, classDiv }: Props) {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         onChange(value);
     }
-    return (<>
+    return (
+        <div className={classDiv}>
             <label htmlFor={id}>{label}</label>
-            <input type={type} id={id} name={name} className="form-control" required={required} value={value} onChange={handleChange}/>
-        </>
+            <input type={type} id={id} name={name} className="form-control" required={required} value={value} onChange={handleChange} />
+        </div>
     )
 }

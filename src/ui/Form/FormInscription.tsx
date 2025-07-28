@@ -2,6 +2,7 @@
 // Import des hooks React nécessaires et des fonctions de validation personnalisées
 import { useState, useEffect } from "react";
 import { validationEmail, validationMdp, mdpIdentique, verifAge, valideNom } from '@/utils/validation';
+import SelectGenre from "@/components/SelectGenre";
 
 export default function FormInscription() {
     // Déclaration des états (state) pour chaque champ du formulaire
@@ -109,13 +110,7 @@ export default function FormInscription() {
                             <p className="text-danger">Vous n&apos;êtes pas majeur</p>
                         )}
                     </div>
-                    <div className="mb-3">
-                        <select className="form-select" aria-label="Selection genre" required value={UtilGenre} onChange={(e) => setUtilGenre(e.target.value)}>
-                            <option value="">Sélectionner un genre</option>
-                            <option value="M">Masculin</option>
-                            <option value="F">Féminin</option>
-                        </select>
-                    </div>
+                    <SelectGenre genre={UtilGenre} setGenre={setUtilGenre} />
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary" id="btnInscription" disabled={!valide}>Inscription</button>
                     </div>
