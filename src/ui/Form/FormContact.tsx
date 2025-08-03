@@ -2,6 +2,11 @@
 // Import des hooks React nécessaires et des fonctions de validation personnalisées
 import { useState, useEffect } from "react";
 import { validationEmail, valideTelephone, valideMessageContact, valideTitreContact, valideNom } from '@/utils/validation';
+import PrimaryButton from "@/components/PrimaryButton";
+import ErreurAlert from "@/components/ErreurAlert";
+import SuccesAlert from "@/components/SuccessAlert";
+import InputForm from "@/components/InputForm";
+import TextArea from "@/components/TexteArea";
 export default function FormContact() {
     // Déclaration des états (state) pour chaque champ du formulaire
     const [nom, setNom] = useState('');
@@ -61,59 +66,39 @@ export default function FormContact() {
             setErreur("Service momentanément inutilisable merci de ressayer plus tard")
         }
     }
+    console.log(message)
     return (
         <section className="sectionConexion container my-5">
-            {erreur && (
-                <div className="w-50 mt-5 alert alert-danger text-center container">
-                    {erreur}
-                </div>
-            )}
-            {success && (
-                <div className="w-50 mt-5 alert alert-success text-center container">
-                    {success}
-                </div>
-            )}
+            {erreur && (<ErreurAlert message={erreur} />)}
+            {success && (<SuccesAlert message={success} />)}
             <h1 className="text-center">Nous contacter</h1>
             <div className="container w-75 my-5">
                 <form onSubmit={handleSubmit} className="my-5 py-5 px-3">
-                    <div className="mb-3">
-                        <label htmlFor="contactNom" className="form-label">Votre nom :</label>
-                        <input type="text" className="form-control" name="nom" id="contactNom" placeholder="Nom :" required value={nom} onChange={(e) => setNom(e.target.value)} />
-                        {nom && !valideNom(nom) && (
-                            <p className="text-danger">Le nom doit faire au minimum 5 caractères.</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="contactEmail" className="form-label">Votre email :</label>
-                        <input type="email" className="form-control" name="adresseEmail" id="contactEmail" placeholder="Email :" required value={adresseEmail} onChange={(e) => setAdresseEmail(e.target.value)} />
-                        {adresseEmail && !validationEmail(adresseEmail) && (
-                            <p className="text-danger">Format invalide</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="contactTelephone" className="form-label">Votre téléphone :</label>
-                        <input type="tel" className="form-control" name="telephone" id="contactTelephone" placeholder="Téléphone :" required value={telephone} onChange={(e) => setTelephone(e.target.value)} />
-                        {telephone && !valideTelephone(telephone) && (
-                            <p className="text-danger">Format invalide</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="contactTitre" className="form-label">L'objet de votre demande :</label>
-                        <input type="text" className="form-control" name="titre" id="contactTitre" placeholder="Titre :" required value={titre} onChange={(e) => setTitre(e.target.value)} />
-                        {titre && !valideTitreContact(titre) && (
-                            <p className="text-danger">Votre titre doit faire au minimum 5 caractères.</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="contactDescription" className="form-label">Votre message :</label>
-                        <textarea className="form-control" name="message" id="contactDescription" placeholder="Votre message :" required value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
-                        {message && !valideMessageContact(message) && (
-                            <p className="text-danger">Votre message doit faire au minimum 10 caractères et maximun 255.</p>
-                        )}
-                    </div>
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-primary" id="btnContact" disabled={!valide}>Envoyer</button>
-                    </div>
+                    <InputForm label="Votre nom :" type="text" name="nom" id="ContactNom" classDiv="mb-3" required value={nom} onChange={(value: string) => setNom(value)} />
+                    {nom && !valideNom(nom) && (
+                        <p className="text-danger">Le nom doit faire au minimum 5 caractères.</p>
+                    )}
+
+                    <InputForm label="Votre email :" type="email" name="adresseEmail" id="ContactEmail" classDiv="mb-3" required value={adresseEmail} onChange={(value: string) => setAdresseEmail(value)} />
+                    {adresseEmail && !validationEmail(adresseEmail) && (
+                        <p className="text-danger">Format invalide</p>
+                    )}
+
+                    <InputForm label="Votre téléphone :" type="tel" name="telephone" id="contactTelephone" classDiv="mb-3" required value={telephone} onChange={(value: string) => setTelephone(value)} />
+                    {telephone && !valideTelephone(telephone) && (
+                        <p className="text-danger">Format invalide</p>
+                    )}
+
+                    <InputForm label="L'objet de votre demande :" type="text" name="titre" id="contactTitre" classDiv="mb-3" required value={titre} onChange={(value: string) => setTitre(value)} />
+                    {titre && !valideTitreContact(titre) && (
+                        <p className="text-danger">Votre titre doit faire au minimum 5 caractères.</p>
+                    )}
+
+                    <TextArea classDiv="mb-3" label="Votre message :" name="message" id="contactMessage" placeHolder="Votre message :" required value={message} onChange={(value: string) => setMessage(value)} />
+                    {message && !valideMessageContact(message) && (
+                        <p className="text-danger">Votre message doit faire au minimum 10 caractères et maximun 255.</p>
+                    )}
+                    <PrimaryButton type="submit" classDiv="text-center" classBtn="btn btn-primary" id="btnContact" disabled={!valide} text="Envoyer" />
                 </form>
             </div>
         </section>

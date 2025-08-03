@@ -15,7 +15,7 @@ export default function InputForm({ id, type, value, name, label, onChange, requ
     }
     return (
         <div className={classDiv}>
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id} className="form-label">{label}</label>
             <input type={type} id={id} name={name} className="form-control" required={required} value={value} onChange={handleChange} />
         </div>
     )

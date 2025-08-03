@@ -3,14 +3,13 @@ import { useState, useEffect } from "react";
 import { validationEmail, validationMdp } from '@/utils/validation';
 import { useRouter } from 'next/navigation';
 import InfoConnexion from '@/interfaces/infoConexion';
+import PrimaryButton from "@/components/PrimaryButton";
+import InputForm from "@/components/InputForm";
+import ErreurAlert from "@/components/ErreurAlert";
 export default function FormConnexion() {
     const router = useRouter();
-    const [infoConnexion, setInfoConnexion] = useState<InfoConnexion>({utilEmail: '', utilMdp: ''});
-    // État pour stocker l'email saisi par l'utilisateur
-    // const [utilEmail, setUtilEmail] = useState<string>('');
-    // État pour stocker le mot de passe saisi par l'utilisateur
-    // const [utilMdp, setUtilMdp] = useState<string>('');
-
+    // État pour stocker les informations de connexion
+    const [infoConnexion, setInfoConnexion] = useState<InfoConnexion>({ utilEmail: '', utilMdp: '' });
     // État pour savoir si le formulaire est valide
     const [valide, setValide] = useState(false);
     // État pour afficher un message d'erreur si besoin
@@ -67,9 +66,7 @@ export default function FormConnexion() {
                 router.push("/admin");
             }
             // On vide les champs du formulaire après la connexion
-            // setUtilEmail("");
-            // setUtilMdp("");
-            setInfoConnexion({utilEmail:'', utilMdp: ''})
+            setInfoConnexion({ utilEmail: '', utilMdp: '' })
 
         } catch (err) {
             // Affiche une erreur en cas de problème réseau ou autre
@@ -78,31 +75,20 @@ export default function FormConnexion() {
     }
     return (
         <section className="sectionConexion container py-5">
-            {erreur && (
-                <div className="w-50 mt-5 alert alert-danger text-center container">
-                    {erreur}
-                </div>
-            )}
+            {erreur && (<ErreurAlert message={erreur} />)}
             <h1 className="text-center">Connexion</h1>
             <div className="container w-75 py-5">
                 <form onSubmit={handleSubmit} className="my-5">
-                    <div className="mb-3">
-                        <label htmlFor="utilEmail" className="form-label">Votre email :</label>
-                        <input type="email" className="form-control" name="utilEmail" id="connexionEmail" placeholder="Email :" required value={infoConnexion.utilEmail} onChange={(e) => setInfoConnexion({...infoConnexion, utilEmail: e.target.value})} />
-                        {infoConnexion.utilEmail && !validationEmail(infoConnexion.utilEmail) && (
-                            <p className="text-danger">Format invalide</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="utilMdp" className="form-label">Votre mot de passe :</label>
-                        <input type="password" className="form-control" name="utilMdp" id="connexionPassword" placeholder="Mot de passe :" required value={infoConnexion.utilMdp} onChange={(e) => setInfoConnexion({...infoConnexion, utilMdp: e.target.value})} />
-                        {infoConnexion.utilMdp && !validationMdp(infoConnexion.utilMdp) && (
-                            <p className="text-danger">Le mot de passe doit comporter au minimun 8 carractéres, un chiffre et un carractéres spécial</p>
-                        )}
-                    </div>
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-primary" id="btnConexion" disabled={!valide}>Connexion</button>
-                    </div>
+                    <InputForm id="connexionEmail" type="email" value={infoConnexion.utilEmail} name="utilEmail" label="Votre email :" onChange={(value) => setInfoConnexion({ ...infoConnexion, utilEmail: value })} required classDiv="mb-3" />
+                    {infoConnexion.utilEmail && !validationEmail(infoConnexion.utilEmail) && (
+                        <p className="text-danger">Format invalide</p>
+                    )}
+
+                    <InputForm id="connexionPassword" type="password" value={infoConnexion.utilMdp} name="utilMdp" label="Votre mot de passe :" onChange={(value) => setInfoConnexion({ ...infoConnexion, utilMdp: value })} required classDiv="mb-3" />
+                    {infoConnexion.utilMdp && !validationMdp(infoConnexion.utilMdp) && (
+                        <p className="text-danger">Le mot de passe doit comporter au minimun 8 carractéres, un chiffre et un carractéres spécial</p>
+                    )}
+                    <PrimaryButton type="submit" classDiv="text-center" classBtn="btn btn-primary" id="btnConnexion" disabled={!valide} text="Connexion" />
                 </form>
             </div>
         </section>
