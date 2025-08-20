@@ -1,8 +1,9 @@
 "use client"
 // Import des hooks React nécessaires et des fonctions de validation personnalisées
-import { useState, useEffect } from "react";
-import { validationEmail, validationMdp, mdpIdentique, verifAge, valideNom } from '@/utils/validation';
+import {useState, useEffect} from "react";
+import {validationEmail, validationMdp, mdpIdentique, verifAge, valideNom} from '@/utils/validation';
 import SelectGenre from "@/components/SelectGenre";
+import InputForm from "@/components/InputForm";
 
 export default function FormInscription() {
     // Déclaration des états (state) pour chaque champ du formulaire
@@ -33,9 +34,9 @@ export default function FormInscription() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ UtilEmail, UtilMdp, UtilPseudo, UtilGenre, UtilNaissance }) // Seuls les champs requis par l’API sont envoyés
+                body: JSON.stringify({UtilEmail, UtilMdp, UtilPseudo, UtilGenre, UtilNaissance}) // Seuls les champs requis par l’API sont envoyés
             });
-           
+
             // Si la réponse n’est pas "OK", on gère les erreurs
             if (!resp.ok) {
                 const err = await resp.json();// Récupère l'erreur renvoyée par le backend
@@ -79,40 +80,40 @@ export default function FormInscription() {
             <h1 className="text-center">Inscription</h1>
             <div className="container w-75 my-5">
                 <form onSubmit={handleSubmit} className="my-5">
-                    <div className="mb-3">
-                        <input type="text" className="form-control" name="UtilPseudo" id="inscriptionPseudo" placeholder="Pseudo :" required value={UtilPseudo} onChange={(e) => setUtilPseudo(e.target.value)} />
-                        {UtilPseudo && !valideNom(UtilPseudo) && (
-                            <p className="text-danger">Le pseudo doit être compris entre 5 et 10 carractéres</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <input type="email" className="form-control" name="UtilEmail" id="inscriptionEmail" placeholder="Email :" required value={UtilEmail} onChange={(e) => setUtilEmail(e.target.value)} />
-                        {UtilEmail && !validationEmail(UtilEmail) && (
-                            <p className="text-danger">Format invalide</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <input type="password" className="form-control" name="UtilMdp" id="inscriptionPassword" placeholder="Mot de passe :" required value={UtilMdp} onChange={(e) => setUtilMdp(e.target.value)} />
-                        {UtilMdp && !validationMdp(UtilMdp) && (
-                            <p className="text-danger">Le mot de passe doit comporter au minimun 8 carractéres, un chiffre et un carractéres spécial</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <input type="password" className="form-control" name="confirmation_UtilMdp" id="inscriptionPasswordConfirmation" placeholder="Confirmation du mot de passe :" required value={UtilMdpConfirm} onChange={(e) => setUtilMdpConfirm(e.target.value)} />
-                        {UtilMdpConfirm && !mdpIdentique(UtilMdp, UtilMdpConfirm) && (
-                            <p className="text-danger">Les mot de passe ne corresponde pas</p>
-                        )}
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="inscriptionNaissance" className="form-label">Votre date de naissance</label>
-                        <input type="date" className="form-control" name="UtilNaissance" id="inscriptionNaissance" required value={UtilNaissance} onChange={(e) => setUtilNaissance(e.target.value)} />
-                        {UtilNaissance && !verifAge(UtilNaissance) && (
-                            <p className="text-danger">Vous n&apos;êtes pas majeur</p>
-                        )}
-                    </div>
-                    <SelectGenre genre={UtilGenre} setGenre={setUtilGenre} />
+                    <InputForm id="inscriptionPseudo" type="text" value={UtilPseudo} name="UtilPseudo" label="Pseudo :"
+                               onChange={(value: string) => setUtilPseudo(value)} required={true} classDiv="mb-3"/>
+                    {UtilPseudo && !valideNom(UtilPseudo) && (
+                        <p className="text-danger">Le pseudo doit être compris entre 5 et 10 carractéres</p>
+                    )}
+                    <InputForm id="insciptionEmail" type="email" value={UtilEmail} name="UtilEmail" label="Email :"
+                               onChange={(value: string) => setUtilEmail(value)} required={true} classDiv="mb-3"/>
+                    {UtilEmail && !validationEmail(UtilEmail) && (
+                        <p className="text-danger">Format invalide</p>
+                    )}
+                    <InputForm id="inscriptionPassword" type="password" value={UtilMdp} name="UtilPassword"
+                               label="Mot de passe :" required={true} classDiv="mb-3"
+                               onChange={(value: string) => setUtilMdp(value)}/>
+                    {UtilMdp && !validationMdp(UtilMdp) && (
+                        <p className="text-danger">Le mot de passe doit comporter au minimun 8 carractéres, un
+                            chiffre et un carractéres spécial</p>
+                    )}
+                    <InputForm id="inscriptionPasswordConfirmation" type="password" value={UtilMdpConfirm}
+                               name="UtilPasswordConfirmation" label="Confirmation du mot de passe :" required={true}
+                               classDiv="mb-3" onChange={(value: string) => setUtilMdpConfirm(value)}/>
+                    {UtilMdpConfirm && !mdpIdentique(UtilMdp, UtilMdpConfirm) && (
+                        <p className="text-danger">Les mot de passe ne corresponde pas</p>
+                    )}
+                    <InputForm id="inscriptionNaissance" type="date" value={UtilNaissance} name="UtilNaissance"
+                               label="Votre date de naissance :" onChange={(value: string) => setUtilNaissance(value)}
+                               required={true} classDiv="mb-3"/>
+                    {UtilNaissance && !verifAge(UtilNaissance) && (
+                        <p className="text-danger">Vous n&apos;êtes pas majeur</p>
+                    )}
+                    <SelectGenre genre={UtilGenre} setGenre={setUtilGenre}/>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary" id="btnInscription" disabled={!valide}>Inscription</button>
+                        <button type="submit" className="btn btn-primary" id="btnInscription"
+                                disabled={!valide}>Inscription
+                        </button>
                     </div>
                 </form>
             </div>
